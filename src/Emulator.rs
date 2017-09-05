@@ -26,6 +26,6 @@ impl Emulator {
     }
 
     pub fn runBlock(&self) {
-        println!("rune bloke");
+        println!("run block");
     }
 }

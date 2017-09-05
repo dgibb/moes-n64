@@ -14,7 +14,6 @@ mod Translation_Cache;
 fn main() {
 
     let mut Emulator = Arc::new(RwLock::new(Emulator::Emulator::new()));
-    let mut Shared_Memory
     let mut server = Nickel::new();
 
     server.add_route(Method::Post, "/sendRom", middleware!{|req|
