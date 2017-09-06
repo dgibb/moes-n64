@@ -21,7 +21,7 @@ impl Emulator {
             FPR: [0;32],
             cp0: [0;32],
             regMap: [0;64],
-            Translation_Cache: Translation_Cache::Translation_Cache::new(1),
+            Translation_Cache: Translation_Cache::new(1),
          }
     }
 
