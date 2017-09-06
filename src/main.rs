@@ -13,15 +13,18 @@ mod Translation_Cache;
 
 fn main() {
 
-    let mut Emulator = Arc::new(RwLock::new(Emulator::Emulator::new()));
+    let Emulator = Arc::new(RwLock::new(Emulator::Emulator::new()));
     let mut server = Nickel::new();
 
+    let EmulatorRom = Emulator.clone();
     server.add_route(Method::Post, "/sendRom", middleware!{|req|
-        let mut Emulator = Emulator.write().unwrap();
+        let mut Emulator = EmulatorRom.write().unwrap();
         req.origin.read_to_end(&mut Emulator.ROM).unwrap();
     });
 
+    let EmulatorBlock = Emulator.clone();
     server.add_route(Method::Get, "/runBlock", middleware!{
+        let Emulator = EmulatorBlock.read().unwrap();
         Emulator.runBlock();
     });
 

@@ -11,6 +11,9 @@ pub struct Translation_Cache {
     page : *mut u8
 }
 
+unsafe impl Send for Translation_Cache {}
+unsafe impl Sync for Translation_Cache {}
+
 const PAGE_SIZE: usize = 8;
 
 impl Translation_Cache {
