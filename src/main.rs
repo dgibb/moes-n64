@@ -10,6 +10,8 @@ use std::sync::RwLock;
 
 mod Emulator;
 mod Translation_Cache;
+mod Emitter;
+mod Interpreter;
 
 fn main() {
 
@@ -22,9 +24,9 @@ fn main() {
         req.origin.read_to_end(&mut Emulator.ROM).unwrap();
     });
 
-    let EmulatorBlock = Emulator.clone();
+    let mut EmulatorBlock = Emulator.clone();
     server.add_route(Method::Get, "/runBlock", middleware!{
-        let Emulator = EmulatorBlock.read().unwrap();
+        let mut Emulator = EmulatorBlock.write().unwrap();
         Emulator.runBlock();
     });
 

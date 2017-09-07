@@ -25,13 +25,13 @@ export class Layout extends React.Component {
   }
 
   executeInstruction() {
-    jquery.get('/cpuState', (data) => {
-      const cpuState = JSON.parse(data)
-      this.setState({
-        registers: cpuState.R,
-        thumb: cpuState.Thumb,
-        mode: cpuState.Mode
-      })
+    jquery.get('/runBlock', () => {
+      // const cpuState = JSON.parse(data)
+      // this.setState({
+      //  registers: cpuState.R,
+      //  thumb: cpuState.Thumb,
+      //  mode: cpuState.Mode
+      // })
     });
   }
 
