@@ -3,14 +3,6 @@ use Interpreter::Interpreter;
 use Emitter::Emitter;
 use std::mem;
 
-fn placeholder(arg: u64) -> u64{
-    return 0;
-}
-
-fn placeholder_returner() -> (*mut fn(u64) -> u64){
-    placeholder as (*mut fn(u64) -> u64)
-}
-
 pub struct Emulator {
     pub ROM: Vec<u8>,
     pub jumpTable: Vec<[u32;2]>,
@@ -43,7 +35,7 @@ impl Emulator {
             Translation_Cache: Translation_Cache::new(1),
             Interpreter: Interpreter::new(),
             Emitter: Emitter::new(),
-            exCache: placeholder_returner(),
+            exCache: ::std::ptr::null_mut(),
          }
     }
 
