@@ -15,7 +15,7 @@ pub struct Emulator {
     pub Translation_Cache: Translation_Cache,
     pub Interpreter : Interpreter,
     pub Emitter : Emitter,
-    pub exCache : *mut fn(u64) -> u64,
+    pub exCache : Option<fn(u64) -> u64>,
 }
 
 unsafe impl Send for Emulator {}
@@ -35,7 +35,7 @@ impl Emulator {
             Translation_Cache: Translation_Cache::new(1),
             Interpreter: Interpreter::new(),
             Emitter: Emitter::new(),
-            exCache: ::std::ptr::null_mut(),
+            exCache: None,
          }
     }
 
@@ -57,12 +57,12 @@ impl Emulator {
             self.Emitter.emit(& testFunc, &mut self.Translation_Cache);
             //store test function in Translation_Cache
         }
-        self.exCache = self.getFnPtr();
-        //println!("{}", (*self.exCache)(24));
+        self.exCache = Some(self.getFnPtr());
+        println!("{}", (self.exCache.unwrap())(24));
         //run machine code, print return value, should be 25
     }
 
-    pub fn getFnPtr(&mut self) -> (*mut fn(u64) -> u64) {
+    pub fn getFnPtr(&mut self) -> (fn(u64) -> u64) {
       unsafe { mem::transmute(self.Translation_Cache.page) }
     }
 }
