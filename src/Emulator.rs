@@ -7,8 +7,8 @@ fn placeholder(arg: u64) -> u64{
     return 0;
 }
 
-fn placehoder_returner() -> (*mut fn(u64) -> u64){
-    *mut placeholder;
+fn placeholder_returner() -> (*mut fn(u64) -> u64){
+    placeholder as (*mut fn(u64) -> u64)
 }
 
 pub struct Emulator {
@@ -71,6 +71,6 @@ impl Emulator {
     }
 
     pub fn getFnPtr(&mut self) -> (*mut fn(u64) -> u64) {
-      unsafe { mem::transmute(self.Translation_Cache) }
+      unsafe { mem::transmute(self.Translation_Cache.page) }
     }
 }
