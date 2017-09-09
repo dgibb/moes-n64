@@ -1,4 +1,4 @@
-use Translation_Cache::Translation_Cache;
+use TranslationCache::TranslationCache;
 
 pub struct Emitter {
     pub page: u64,
@@ -13,10 +13,10 @@ impl Emitter {
         }
     }
 
-    pub fn emit(&mut self, Dyna_Rec_Code: &Vec<u8>, Translation_Cache: &mut Translation_Cache){
-        for (index,i) in Dyna_Rec_Code.iter().enumerate() {
-            Translation_Cache[index] = *i;
-            println!("Emitting! {} to index {}", *i, index);
+    pub fn emit(&mut self, dyna_rec_code: &Vec<u8>, TranslationCache: &mut TranslationCache){
+        for (index,i) in dyna_rec_code.iter().enumerate() {
+            TranslationCache[index] = *i;
+            println!("Emitting! {:X} to index {}", *i, index);
         }
     }
 }

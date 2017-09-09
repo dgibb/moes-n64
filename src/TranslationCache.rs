@@ -8,16 +8,16 @@ extern{
     fn memset(s: *mut libc::c_void, c: libc::uint32_t, n: libc::size_t) -> *mut libc::c_void;
 }
 
-pub struct Translation_Cache {
+pub struct TranslationCache {
     pub page : *mut u8
 }
 
-unsafe impl Send for Translation_Cache {}
-unsafe impl Sync for Translation_Cache {}
+unsafe impl Send for TranslationCache {}
+unsafe impl Sync for TranslationCache {}
 
 const PAGE_SIZE: usize = 4096;
 
-impl Index<usize> for Translation_Cache {
+impl Index<usize> for TranslationCache {
     type Output = u8;
 
     fn index(&self, _index: usize) -> &u8 {
@@ -25,14 +25,14 @@ impl Index<usize> for Translation_Cache {
     }
 }
 
-impl IndexMut<usize> for Translation_Cache {
+impl IndexMut<usize> for TranslationCache {
     fn index_mut(&mut self, _index: usize) -> &mut u8 {
         unsafe {&mut *self.page.offset(_index as isize) }
     }
 }
 
-impl Translation_Cache {
-    pub fn new(num_pages: usize) -> Translation_Cache {
+impl TranslationCache {
+    pub fn new(num_pages: usize) -> TranslationCache {
         let page : *mut u8;
         unsafe {
             let cache_size = num_pages * PAGE_SIZE;
@@ -42,6 +42,6 @@ impl Translation_Cache {
             memset(_page, 0xC3, cache_size);
             page = mem::transmute(_page);
         }
-        Translation_Cache { page: page }
+        TranslationCache { page: page }
     }
 }

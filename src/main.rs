@@ -9,25 +9,25 @@ use std::sync::Arc;
 use std::sync::RwLock;
 
 mod Emulator;
-mod Translation_Cache;
+mod TranslationCache;
 mod Emitter;
 mod Interpreter;
 
 fn main() {
 
-    let Emulator = Arc::new(RwLock::new(Emulator::Emulator::new()));
+    let emulator = Arc::new(RwLock::new(Emulator::Emulator::new()));
     let mut server = Nickel::new();
 
-    let EmulatorRom = Emulator.clone();
+    let emulator_rom = emulator.clone();
     server.add_route(Method::Post, "/sendRom", middleware!{|req|
-        let mut Emulator = EmulatorRom.write().unwrap();
-        req.origin.read_to_end(&mut Emulator.ROM).unwrap();
+        let mut emulator = emulator_rom.write().unwrap();
+        req.origin.read_to_end(&mut emulator.ROM).unwrap();
     });
 
-    let mut EmulatorBlock = Emulator.clone();
+    let mut emulator_block = emulator.clone();
     server.add_route(Method::Get, "/runBlock", middleware!{
-        let mut Emulator = EmulatorBlock.write().unwrap();
-        Emulator.runBlock();
+        let mut emulator = emulator_block.write().unwrap();
+        emulator.run_block();
     });
 
     server.utilize(StaticFilesHandler::new("./Client"));
