@@ -1,5 +1,7 @@
 /node_modules
 /target
+/ROMs
 package.json
 package-lock.json
 webpack.config.js
+/src/registers.ref

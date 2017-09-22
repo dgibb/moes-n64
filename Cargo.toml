@@ -7,3 +7,4 @@ authors = ["David Gibb <dgibb802@gmail.com>"]
 libc = "0.2.2"
 nickel = "*"
 hyper = "*"
+byteorder = "*"

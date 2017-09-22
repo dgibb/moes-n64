@@ -16,6 +16,8 @@ unsafe impl Send for TranslationCache {}
 unsafe impl Sync for TranslationCache {}
 
 const PAGE_SIZE: usize = 4096;
+//this will likely be larger
+//Mupen64 plus uses 16Kilobyte pages
 
 impl Index<usize> for TranslationCache {
     type Output = u8;

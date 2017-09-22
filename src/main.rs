@@ -1,5 +1,6 @@
 #[macro_use] extern crate nickel;
 extern crate hyper;
+extern crate byteorder;
 
 
 use hyper::method::Method;
@@ -21,10 +22,11 @@ fn main() {
     let emulator_rom = emulator.clone();
     server.add_route(Method::Post, "/sendRom", middleware!{|req|
         let mut emulator = emulator_rom.write().unwrap();
-        req.origin.read_to_end(&mut emulator.ROM).unwrap();
+        emulator.init();
+        req.origin.read_to_end(&mut emulator.rom).unwrap();
     });
 
-    let mut emulator_block = emulator.clone();
+    let emulator_block = emulator.clone();
     server.add_route(Method::Get, "/runBlock", middleware!{
         let mut emulator = emulator_block.write().unwrap();
         emulator.run_block();

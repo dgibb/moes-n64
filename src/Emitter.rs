@@ -13,9 +13,9 @@ impl Emitter {
         }
     }
 
-    pub fn emit(&mut self, dyna_rec_code: &Vec<u8>, TranslationCache: &mut TranslationCache){
+    pub fn emit(&mut self, dyna_rec_code: &Vec<u8>, translation_cache: &mut TranslationCache){
         for (index,i) in dyna_rec_code.iter().enumerate() {
-            TranslationCache[index] = *i;
+            translation_cache[index] = *i;
             println!("Emitting! {:X} to index {}", *i, index);
         }
     }
